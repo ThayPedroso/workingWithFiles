@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Globalization;
 
 namespace fileStream
 {
@@ -7,16 +8,28 @@ namespace fileStream
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Temp\Notes\note1.txt";
+            string path = @"c:\temp\test\source.txt";
 
-            Console.WriteLine("DirectorySeparatorChar: " + Path.DirectorySeparatorChar);
-            Console.WriteLine("PathSeparator: " + Path.PathSeparator);
-            Console.WriteLine("GetDirectoryName: " + Path.GetDirectoryName(path));
-            Console.WriteLine("GetFileName: " + Path.GetFileName(path));
-            Console.WriteLine("GetFileNameWithoutExtension: " + Path.GetFileNameWithoutExtension(path));
-            Console.WriteLine("GetExtension: " + Path.GetExtension(path));
-            Console.WriteLine("GetFullPath: " + Path.GetFullPath(path));
-            Console.WriteLine("GetTempPath: " + Path.GetTempPath());
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path) + "\\out");
+
+                string[] lines = File.ReadAllLines(path);
+
+                using (StreamWriter sw = File.AppendText(Path.GetDirectoryName(path) + "\\out\\summary.txt"))
+                {
+                    foreach (string line in lines)
+                    {
+                        string[] dadosProduto = line.Split(',');
+                        sw.WriteLine(dadosProduto[0] + "," + (double.Parse(dadosProduto[1], CultureInfo.InvariantCulture) * int.Parse(dadosProduto[2])).ToString("F2", CultureInfo.InvariantCulture));
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("An error occurred");
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
