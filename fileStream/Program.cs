@@ -7,31 +7,16 @@ namespace fileStream
     {
         static void Main(string[] args)
         {
-            string sourcePath = @"c:\temp";
+            string path = @"C:\Temp\Notes\note1.txt";
 
-            try
-            {
-                var folders = Directory.EnumerateDirectories(sourcePath, "*.*", SearchOption.AllDirectories);
-                Console.WriteLine("FOLDERS:");
-                foreach (string s in folders)
-                {
-                    Console.WriteLine(s);
-                }
-
-                var files = Directory.EnumerateFiles(sourcePath, "*.*", SearchOption.AllDirectories);
-                Console.WriteLine("FILES:");
-                foreach (string s in files)
-                {
-                    Console.WriteLine(s);
-                }
-
-                Directory.CreateDirectory(sourcePath + "\\newFolder");
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("An error occurred");
-                Console.WriteLine(e.Message);
-            }
+            Console.WriteLine("DirectorySeparatorChar: " + Path.DirectorySeparatorChar);
+            Console.WriteLine("PathSeparator: " + Path.PathSeparator);
+            Console.WriteLine("GetDirectoryName: " + Path.GetDirectoryName(path));
+            Console.WriteLine("GetFileName: " + Path.GetFileName(path));
+            Console.WriteLine("GetFileNameWithoutExtension: " + Path.GetFileNameWithoutExtension(path));
+            Console.WriteLine("GetExtension: " + Path.GetExtension(path));
+            Console.WriteLine("GetFullPath: " + Path.GetFullPath(path));
+            Console.WriteLine("GetTempPath: " + Path.GetTempPath());
         }
     }
 }
