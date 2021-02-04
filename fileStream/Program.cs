@@ -7,20 +7,25 @@ namespace fileStream
     {
         static void Main(string[] args)
         {
-            string sourcePath = @"c:\temp\file1.txt";
-            string targetPath = @"c:\temp\file2.txt";
+            string sourcePath = @"c:\temp";
 
             try
             {
-                string[] lines = File.ReadAllLines(sourcePath);
-
-                using (StreamWriter sw = File.AppendText(targetPath))
+                var folders = Directory.EnumerateDirectories(sourcePath, "*.*", SearchOption.AllDirectories);
+                Console.WriteLine("FOLDERS:");
+                foreach (string s in folders)
                 {
-                    foreach (string line in lines)
-                    {
-                        sw.WriteLine(line.ToUpper());
-                    }
+                    Console.WriteLine(s);
                 }
+
+                var files = Directory.EnumerateFiles(sourcePath, "*.*", SearchOption.AllDirectories);
+                Console.WriteLine("FILES:");
+                foreach (string s in files)
+                {
+                    Console.WriteLine(s);
+                }
+
+                Directory.CreateDirectory(sourcePath + "\\newFolder");
             }
             catch (IOException e)
             {
