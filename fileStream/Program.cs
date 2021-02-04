@@ -7,16 +7,18 @@ namespace fileStream
     {
         static void Main(string[] args)
         {
-            string path = @"c:\temp\file1.txt";
+            string sourcePath = @"c:\temp\file1.txt";
+            string targetPath = @"c:\temp\file2.txt";
 
             try
             {
-                using (StreamReader sr = File.OpenText(path))
+                string[] lines = File.ReadAllLines(sourcePath);
+
+                using (StreamWriter sw = File.AppendText(targetPath))
                 {
-                    while (!sr.EndOfStream)
+                    foreach (string line in lines)
                     {
-                        string line = sr.ReadLine();
-                        Console.WriteLine(line);
+                        sw.WriteLine(line.ToUpper());
                     }
                 }
             }
